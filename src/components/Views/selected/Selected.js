@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import AnimeBox from '../../BoxView/Anime'
 import { envAPI } from '../../EndPoints/Endpoint_v2'
 
 import {
@@ -8,23 +9,44 @@ import {
 } from './selectedStyled'
 
 const Selected = (props) => {
-    var id = useParams().id;
+    const id = useParams().id;
+    const [loading, setDLoading] = useState(false);
+    const [name, setName] = useState("");
+    const [Img, setImg] = useState("");
+    const [link, setLink] = useState("");
+
     const response = async page => envAPI(page);
     useEffect(() => {
-        async function loadapi() {    
-        const {data} = await response( `anime/${id}`);
-        console.log(data)
-        
+        setDLoading(true);
+        async function loadapi() {
+            const { data } = await response(`anime/${id}`);
+            console.log(data);
+
+            setName(data.data.attributes.titles.en ? data.data.attributes.titles.en : data.data.attributes.titles.en_jp);
+            setImg(data.data.attributes.posterImage.large);
+            setLink(data.data.links.self);
+            setDLoading(false);
+
+
         }
         loadapi();
 
     }, [])
-  console.log(useParams().id);
+
+    console.log(useParams().id);
     return (
         <DivPage>
-            yolo
+            {!loading ?
+                <AnimeBox
+                    name={name}
+                    image={Img}
+                    url={link} />
+                :
+                {id}
+            }
+            
         </DivPage>
     )
 }
 
-export default Selected
+export default Selected;

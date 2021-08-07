@@ -12,7 +12,7 @@ const Preloaders = (props) => {
     //console.log(type);
     return (
         <>
-            {props.type == 1 &&
+            {props.type === 1 &&
                 <Preloader1
                     dim={props.dimention}
                     duty={props.duration}
@@ -21,7 +21,7 @@ const Preloaders = (props) => {
                 >
                 </Preloader1>
             }
-            {props.type == 2 &&
+            {props.type === 2 &&
                 <Preloader2
                     dim={props.dimention}
                     duty={props.duration}

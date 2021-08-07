@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import { API, envAPI } from '../EndPoints/Endpoint_v2';
+import {  envAPI } from '../EndPoints/Endpoint_v2';
 import {
     DivList,
 Link,

@@ -6,25 +6,25 @@ import Trend from '../../trend/Trend';
 
 
 
-import{
+import {
     DivCont,
     DivInit,
-DivLeft,
-Nav,
+    DivLeft,
+    Nav,
 
 } from './inicioStyled'
 const Init = () => {
-const [dataAnimes, setDataAnimes] = useState([])
-const [next, setNext] = useState('')
-const [loading, setLoading] = useState(false)
+    const [dataAnimes, setDataAnimes] = useState([])
+    const [next, setNext] = useState('')
+    const [loading, setLoading] = useState(false)
 
     const response = async page => envAPI(page);
     useEffect(() => {
-        async function loadapi() {    
-        const {data} = await response("anime");
-        console.log(data)
-        setDataAnimes(data.data)
-        setNext(data.links.next)
+        async function loadapi() {
+            const { data } = await response("anime");
+            console.log(data)
+            setDataAnimes(data.data)
+            setNext(data.links.next)
         }
         loadapi();
 
@@ -36,31 +36,31 @@ const [loading, setLoading] = useState(false)
     }
     const more = async () => {
         setLoading(true);
-        const {data} = await API(next);
+        const { data } = await API(next);
         console.log(data)
         setDataAnimes(prev => [...prev, ...data.data])
         setNext(data.links.next)
-        
+
         setLoading(false);
     }
     return (
         <DivInit>
             <Nav></Nav>
             <DivLeft>
-            <Trend />
-            
+                <Trend />
+
             </DivLeft>
-            <DivCont  onScroll={handleScroll}>
-            {dataAnimes.map((item, index) => (
-                <AnimeBox key={index} 
-                name={item.attributes.titles.en? item.attributes.titles.en:item.attributes.titles.en_jp } 
-                image={item.attributes.posterImage.large}
-                url={item.links.self}/>
-            ))}
-            
+            <DivCont onScroll={handleScroll}>
+                {dataAnimes.map((item, index) => (
+                    <AnimeBox key={index}
+                        name={item.attributes.titles.en ? item.attributes.titles.en : item.attributes.titles.en_jp}
+                        image={item.attributes.posterImage.large}
+                        url={item.links.self} />
+                ))}
+
             </DivCont>
-             
-            
+
+
         </DivInit>
     )
 }
